@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4">Users Overview</h1>
+  <br>
+  <form method="get" action="" class="form-inline">
+    {{ search_form|crispy }} <input class="btn btn-secondary ml-2" type="submit" value="🔍">
+  </form>
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Is Organizer</th>
+                <th>Number of Events</th>
+                <th>Average Event Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if user.is_organizer %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-secondary">No</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.event_count }}</td>
+                    <td>
+                        {% if user.average_rating %}
+                            {{ user.average_rating|floatformat:1 }}
+                        {% else %}
+                            <span class="text-muted">No Ratings</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No users found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

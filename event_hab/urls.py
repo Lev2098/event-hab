@@ -16,8 +16,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+import event_hab
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+
+    path("", include("event_manager.urls", namespace="event_manager")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
+
 ]
