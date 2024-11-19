@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Event Hub
 
 Event Hub is a Django-based web application designed to manage events and participants. It supports organizing events, user management, feedback, and ratings for events. The project is currently in the **Alpha 1.0** stage of development.
