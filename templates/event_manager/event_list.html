@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{%  block title %}
+<title>Event List</title>
+{% endblock %}
+{% block content %}
+  <h1>Event List {% if user.is_organizer %}<a href="{% url 'event-manager:event-create' %}" class="btn btn-primary" >+</a>{% endif %}</h1>
+  <br>
+  <form method="get" action="" class="form-inline">
+      {{ search_form|crispy }} <input class="btn btn-secondary ml-2" type="submit" value="🔍">
+  </form>
+  <br>
+  <ul class="list-group">
+    {% for event in event_list %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <h5>{{ event.title }}</h5>
+        <p class="mb-1">{{ event.description|truncatewords:15 }}</p>
+        <p class="mb-0"><strong>Date:</strong> {{ event.date }}</p>
+        <p class="mb-0"><strong>Location:</strong> {{ event.location }}</p>
+        <p class="mb-0"><strong>Organizer:</strong> {{ event.organizer }}</p>
+        <p class="mb-0"><strong>Participants:</strong> {{ event.max_participants }}</p>
+        <p class="mb-0"><strong>Rate:</strong>
+          {% if event.rating %}
+            {{ event.rating|floatformat:1 }} / 10
+          {% else %}
+            None
+          {% endif %}
+        </p>
+      </div>
+      <a href="{% url 'event_manager:event-detail' event.pk %}" class="btn btn-info">View</a>
+      {% if request.user == event.organizer %}
+        <a class="btn btn-secondary" href="{% url 'event-manager:event-update' event.pk %}">Edit Event</a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

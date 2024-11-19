@@ -1,0 +1,67 @@
+<div class="container-fluid position-sticky z-index-sticky top-0">
+  <div class="row">
+    <div class="col-12">
+      <nav class="navbar navbar-expand-lg blur border-radius-xl shadow-sm my-3 p-2 mx-4">
+        <div class="container-fluid px-0">
+          <!-- Логотип -->
+          <a class="navbar-brand font-weight-bolder ms-sm-3 text-sm" href="{% url 'event_manager:index' %}">
+            Event Hab
+          </a>
+          
+          <!-- Кнопка для мобільного меню -->
+          <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon mt-2">
+              <span class="navbar-toggler-bar bar1"></span>
+              <span class="navbar-toggler-bar bar2"></span>
+              <span class="navbar-toggler-bar bar3"></span>
+            </span>
+          </button>
+          
+          <!-- Вміст навігації -->
+          <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
+            <!-- Меню по центру -->
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item">
+                <a class="nav-link nav-link-icon" href="{% url 'event_manager:index' %}">
+                  <p class="d-inline text-sm z-index-1 font-weight-semibold">Home Page</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-icon" href="{% url 'event_manager:event-list' %}">
+                  <p class="d-inline text-sm z-index-1 font-weight-semibold">All Events</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-icon" href="{% url 'event_manager:user-list' %}">
+                  <p class="d-inline text-sm z-index-1 font-weight-semibold">All Users</p>
+                </a>
+              </li>
+            </ul>
+            
+            <!-- Логін/Логаут праворуч -->
+            <ul class="navbar-nav ms-auto">
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link nav-link-icon me-2" href="{{ user.get_absolute_url }}">
+                  <p class="d-inline text-sm z-index-1 font-weight-semibold">User: {{ user.get_username }}</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-icon" href="{% url 'logout' %}?next={{ request.path }}">
+                  <p class="d-inline text-sm z-index-1 font-weight-semibold">Logout</p>
+                </a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link nav-link-icon" href="{% url 'login' %}?next={{ request.path }}">
+                  <p class="d-inline text-sm z-index-1 font-weight-semibold">Login</p>
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
