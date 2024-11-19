@@ -18,6 +18,7 @@ class User(AbstractUser):
     class Meta:
         ordering = ["username"]
 
+
 class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -25,7 +26,9 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     location = models.CharField(max_length=255)
     max_participants = models.IntegerField()
-    organizer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="organized_events")
+    organizer = models.ForeignKey(User,
+                                  on_delete=models.CASCADE,
+                                  related_name="organized_events")
 
     def get_rating(self):
         result = self.feedbacks.aggregate(average_rating=Avg('rating'))
@@ -41,10 +44,17 @@ class Event(models.Model):
         ordering = ["date"]
 
 
-
 class Participant(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="participations")
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="participants")
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="participations"
+    )
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name="participants"
+    )
     is_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
@@ -52,9 +62,20 @@ class Participant(models.Model):
 
 
 class Feedback(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="feedbacks")
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="feedbacks")
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="feedbacks"
+    )
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name="feedbacks"
+    )
+    rating = models.IntegerField(
+        validators=[MinValueValidator(1),
+                    MaxValueValidator(10)]
+    )
     comment = models.TextField()
 
     def __str__(self):

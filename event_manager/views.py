@@ -8,7 +8,10 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from event_manager.forms import EventForm, EventCreateForm, EventSearchForm, UserSearchForm
+from event_manager.forms import (EventForm,
+                                 EventCreateForm,
+                                 EventSearchForm,
+                                 UserSearchForm)
 from event_manager.models import Event, User
 
 
@@ -25,7 +28,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "event_manager/index.html", context=context)
 
 
-class UserListView(LoginRequiredMixin ,generic.ListView):
+class UserListView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = "event_manager/user_list.html"
     context_object_name = "users"
@@ -50,13 +53,17 @@ class UserListView(LoginRequiredMixin ,generic.ListView):
             user.rating = user.average_rating if user.average_rating else 0
         return context
 
+
 class EventListView(LoginRequiredMixin, generic.ListView):
     model = Event
     template_name = "event_manager/event_list.html"
     context_object_name = "event_list"
     paginate_by = 1
+
     def get_queryset(self):
-        queryset = super().get_queryset().select_related("organizer").prefetch_related('feedbacks')
+        queryset = (super().get_queryset().
+                    select_related("organizer").
+                    prefetch_related('feedbacks'))
         form = EventSearchForm(self.request.GET)
         if form.is_valid():
             title = form.cleaned_data.get("title")
@@ -71,6 +78,7 @@ class EventListView(LoginRequiredMixin, generic.ListView):
         for event in context[self.context_object_name]:
             event.rating = event.get_rating()
         return context
+
 
 class EventDetailView(LoginRequiredMixin, generic.DetailView):
     model = Event
@@ -87,7 +95,7 @@ class EventCreateView(LoginRequiredMixin, generic.CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_organizer:
-            raise PermissionDenied("Only organizers can create events.")  # Використовуйте raise замість return
+            raise PermissionDenied("Only organizers can create events.")
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -106,7 +114,7 @@ class EventUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.instance.organizer = self.request.user  # Переконаємося, що організатор не зміниться
+        form.instance.organizer = self.request.user
         return super().form_valid(form)
 
 
@@ -116,6 +124,7 @@ class EventDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         event = self.get_object()
-        if event.organizer != self.request.user and not self.request.user.is_staff:
+        if (event.organizer != self.request.user
+                and not self.request.user.is_staff):
             raise PermissionDenied("You are not allowed to delete this event.")
         return super().dispatch(request, *args, **kwargs)

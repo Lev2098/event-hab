@@ -1,5 +1,5 @@
 from django import forms
-from django.forms.widgets import DateInput, DateTimeInput
+from django.forms.widgets import DateTimeInput
 
 from event_manager.models import User, Event
 
@@ -29,15 +29,24 @@ class UserSearchForm(forms.Form):
 class EventCreateForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['title', 'description', 'date', 'location', 'max_participants']
+        fields = ['title',
+                  'description',
+                  'date',
+                  'location',
+                  'max_participants']
         widgets = {
             'date': DateTimeInput(attrs={'type': 'datetime-local'}),
         }
 
+
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['title', 'description', 'date', 'location', 'max_participants']
+        fields = ['title',
+                  'description',
+                  'date',
+                  'location',
+                  'max_participants']
         widgets = {
             'date': DateTimeInput(attrs={'type': 'datetime-local'}),
         }

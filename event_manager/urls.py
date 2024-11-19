@@ -15,9 +15,21 @@ urlpatterns = [
     path("users/", UserListView.as_view(), name="user-list"),
     path("events/", EventListView.as_view(), name="event-list"),
     path("event/<int:pk>/", EventDetailView.as_view(), name="event-detail"),
-    path("event/create/", EventCreateView.as_view(), name="event-create"),
-    path("event/<int:pk>/update/", EventUpdateView.as_view(), name="event-update"),
-    path("event/<int:pk>/delete/", EventDeleteView.as_view(), name="event-delete")
+    path(
+        "event/create/",
+        EventCreateView.as_view(),
+        name="event-create"
+    ),
+    path(
+        "event/<int:pk>/update/",
+        EventUpdateView.as_view(),
+        name="event-update"
+    ),
+    path(
+        "event/<int:pk>/delete/",
+        EventDeleteView.as_view(),
+        name="event-delete"
+    )
 ]
 
 app_name = "event-manager"
