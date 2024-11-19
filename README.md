@@ -105,5 +105,3 @@ Contributions are welcome! Please read the (coming soon) for details on our code
 
 This project is licensed under the MIT License - see the (coming soon) file for details.
 =======
-# event-hub
->>>>>>> 8a0b7d4d14376daca7bee598501ae300fbc8b3fa
