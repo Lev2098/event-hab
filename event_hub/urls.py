@@ -19,12 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 import event_hub
+from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 
     path("", include("event_manager.urls", namespace="event_manager")),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("__debug__/", include("debug_toolbar.urls")),
-
 ]
+if settings.DEBUG:
+   urlpatterns += path("__debug__/", include("debug_toolbar.urls")),
