@@ -6,7 +6,7 @@ from event_hub.settings.base import *
 
 
 # Security settings
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
