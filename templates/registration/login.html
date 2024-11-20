@@ -19,6 +19,8 @@
 
   <input type="submit" value="Login" class="btn btn-primary" />
   <input type="hidden" name="next" value="{{ next }}" />
+  <a href="{% url 'event_manager:registration' %}" class="btn btn-secondary">Registration</a>
+
 </form>
 
 {% endblock %}
