@@ -31,6 +31,7 @@
       <a href="{% url 'event_manager:event-detail' event.pk %}" class="btn btn-info">View</a>
       {% if request.user == event.organizer %}
         <a class="btn btn-secondary" href="{% url 'event-manager:event-update' event.pk %}">Edit Event</a>
+        <a class="btn btn-danger" href="{% url 'event-manager:event-delete' event.pk %}">Delete Event</a>
       {% endif %}
     </li>
     {% endfor %}
