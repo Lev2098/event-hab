@@ -42,7 +42,7 @@
             <ul class="navbar-nav ms-auto">
               {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link nav-link-icon me-2" href="{{ user.get_absolute_url }}">
+                <a class="nav-link nav-link-icon me-2" href="{% url 'event_manager:user-detail' pk=user.pk %}">
                   <p class="d-inline text-sm z-index-1 font-weight-semibold">User: {{ user.get_username }}</p>
                 </a>
               </li>
