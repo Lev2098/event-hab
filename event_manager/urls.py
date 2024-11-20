@@ -7,7 +7,7 @@ from .views import (index,
                     EventUpdateView,
                     EventDeleteView,
                     UserListView,
-                    register,
+                    registration,
                     UserDetailView,
                     UserUpdateView,
                     add_feedback,
@@ -42,7 +42,7 @@ urlpatterns = [
         name="event-delete"
     ),
 
-    path("registration/", register, name="registration"),
+    path("registration/", registration, name="registration"),
 ]
 
 app_name = "event-manager"
