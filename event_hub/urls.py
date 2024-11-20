@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf.urls.static import static
 import event_hub
 from django.conf import settings
 
@@ -26,6 +26,6 @@ urlpatterns = [
 
     path("", include("event_manager.urls", namespace="event_manager")),
     path("accounts/", include("django.contrib.auth.urls")),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
    urlpatterns += path("__debug__/", include("debug_toolbar.urls")),
