@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{%  block title %}
+<title>User {{ user.username }}</title>
+{% endblock %}
+{% block content %}
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 500px;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 10px;
+        }
+        .data {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Profile</h1>
+        <div class="section-title">
+          <a href="{% url 'event_manager:user-update' user.pk %}">Update Profile</a>
+        </div>
+        <div class="section">
+            <div class="section-title">Username</div>
+            <div class="data">{{ user.username }}</div>
+        </div>
+        <div class="section">
+            <div class="section-title">Personal Info</div>
+            <div class="data"><strong>First Name:</strong> {{ user.first_name }}</div>
+            <div class="data"><strong>Last Name:</strong> {{ user.last_name }}</div>
+            <div class="data"><strong>Email:</strong> {{ user.email }}</div>
+        </div>
+        <div class="section">
+            <div class="section-title">Important Dates</div>
+            <div class="data"><strong>Date Joined:</strong>{{ user.date_joined }} </div>
+        </div>
+        <div class="section">
+            <div class="section-title">Additional Info</div>
+            <div class="data"><strong>Is Organizer:</strong> {{ user.is_organizer }}</div>
+        </div>
+        <div class="footer">
+            &copy; 2024 User Management System
+        </div>
+    </div>
+</body>
+{% endblock %}
