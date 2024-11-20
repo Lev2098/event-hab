@@ -1,7 +1,8 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.forms.widgets import DateTimeInput
-
-from event_manager.models import User, Event
+from django.contrib.auth import get_user_model
+from event_manager.models import User, Event, Feedback, Participant
 
 
 class EventSearchForm(forms.Form):
@@ -38,6 +39,20 @@ class EventCreateForm(forms.ModelForm):
             'date': DateTimeInput(attrs={'type': 'datetime-local'}),
         }
 
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['rating', 'comment']
+        widgets = {
+            'rating': forms.NumberInput(attrs={'min': 1, 'max': 10, 'class': 'form-control'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
+
+
+class ParticipantForm(forms.ModelForm):
+    class Meta:
+        model = Participant
+        fields = []
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -58,3 +73,11 @@ class EventForm(forms.ModelForm):
             required=False,
             widget=forms.HiddenInput()
         )
+
+
+
+class CustomUserCreationForm(UserCreationForm):
+    User = get_user_model()
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
