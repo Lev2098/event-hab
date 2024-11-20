@@ -63,16 +63,16 @@ Then, open your browser and go to `http://127.0.0.1:8000/` to see the project in
 1. **Homepage:**
     - Overview of the total number of events, organizers, and users.
     - [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-
+![index.html](demo.png)
 2. **User Management:**
     - Lists all users along with their details and allows searching by username.
     - [http://127.0.0.1:8000/users/](http://127.0.0.1:8000/users/)
-
+![user_list.html](user_list.png)
 3. **Event Management:**
     - Lists all events with details and allows searching by title.
     - [http://127.0.0.1:8000/events/](http://127.0.0.1:8000/events/)
     - Only organizers can create, update, and delete events.
-
+![event_list.html](event_list.png)
 ## Models
 
 - **User:** Inherits from Django’s AbstractUser. Users can be organizers. 
