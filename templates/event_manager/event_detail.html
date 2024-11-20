@@ -1,16 +1,72 @@
 {% extends "base.html" %}
-{%block title%}
-  <title>Event Detail</title>
-{% endblock %}
 {% block content %}
-  <h1>{{ event.title }}</h1>
-  <h2>Organize: {{ event.organizer }}</h2>
-  {% if request.user == event.organizer %}
-    <a class="btn btn-secondary" href="{% url 'event-manager:event-update' event.pk %}">Edit Event</a>
-  {% endif %}
-  <h5>About event:</h5>
-  <p>{{ event.description }}</p>
-  <p>Start at {{ event.date }}</p>
-  <p>Location: {{ event.location }}</p>
-  <p>Max participants: {{ event.max_participants }}</p>
+
+<div class="event-detail">
+    <h1>{{ event.title }}</h1>
+    <h2>Organized by: {{ event.organizer }}</h2>
+
+    <div class="event-info">
+        <p><strong>Description:</strong> {{ event.description }}</p>
+        <p><strong>Date:</strong> {{ event.date }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Max Participants:</strong> {{ event.max_participants }}</p>
+        <p><strong>Average Rating:</strong> {{ event.get_rating|default:0 }}</p>
+    </div>
+
+    <!-- Participate in Event -->
+    {% if request.user.is_authenticated %}
+        <form method="post" action="{% url 'event_manager:participate-in-event' event.pk %}">
+            {% csrf_token %}
+            {{ participant_form.as_p }}
+            <button type="submit" class="btn btn-primary">Participate in Event</button>
+        </form>
+    {% else %}
+        <p>You need to <a href="{% url 'login' %}">log in</a> to participate.</p>
+    {% endif %}
+
+    <!-- Main content: Comments & Participants -->
+    <div class="event-layout">
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <h3>Comments</h3>
+            {% if now|date:"Y-m-d H:i" > event.date|add:"24 hours" %}
+                {% if request.user.is_authenticated %}
+                    <form method="post" action="{% url 'event_manager:add-feedback' event.pk %}">
+                        {% csrf_token %}
+                        {{ feedback_form.as_p }}
+                        <button type="submit" class="btn btn-success">Submit Feedback</button>
+                    </form>
+                {% else %}
+                    <p>You need to <a href="{% url 'login' %}">log in</a> to leave feedback.</p>
+                {% endif %}
+            {% else %}
+                <p>Feedback can be submitted 24 hours after the event starts.</p>
+            {% endif %}
+
+            <!-- Existing Feedbacks -->
+            <ul>
+                {% for feedback in event.feedbacks.all %}
+                    <li>
+                        <strong>{{ feedback.user.username }}</strong>: 
+                        {{ feedback.comment }} (Rating: {{ feedback.rating }})
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Participants Section -->
+        <div class="participants-section">
+            <h3>Participants ({{ participants.count }})</h3>
+            {% if participants %}
+                <ul>
+                    {% for participant in participants %}
+                        <li>{{ participant.user.username }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No participants yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
