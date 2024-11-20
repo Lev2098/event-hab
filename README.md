@@ -26,7 +26,7 @@ To run this project locally, you'll need to follow these steps:
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/yourusername/event_hub.git
+    git clone https://github.com/Lev2098/event-hub
     cd event_hub
     ```
 
