@@ -3,11 +3,10 @@ import os
 
 from dotenv import load_dotenv
 from event_hub.settings.base import *
-# Load environment variables from the .env file
-env_path = Path('.') / '.env'
-load_dotenv(dotenv_path=env_path)
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+
+
+# Security settings
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -18,13 +17,17 @@ POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
 POSTGRES_HOST = os.getenv('POSTGRES_HOST')
 POSTGRES_DB_PORT = os.getenv('POSTGRES_DB_PORT')
 
-# Validate environment variables
-if not all([POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_DB_PORT]):
-    raise ValueError("One or more of the PostgreSQL environment variables are missing.")
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+# Static files settings
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Database settings
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -33,8 +36,5 @@ DATABASES = {
         'PASSWORD': POSTGRES_PASSWORD,
         'HOST': POSTGRES_HOST,
         'PORT': int(POSTGRES_DB_PORT),
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
     }
 }
