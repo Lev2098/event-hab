@@ -26,7 +26,7 @@ from event_manager.models import Event, User, Participant
 @login_required
 def index(request: HttpRequest) -> HttpResponse:
     num_events = Event.objects.count()
-    num_organizers = Event.objects.filter(organizer=request.user).count()
+    num_organizers = Event.objects.count()
     num_users = User.objects.count()
     context = {
         "num_events": num_events,
