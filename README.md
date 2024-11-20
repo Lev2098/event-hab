@@ -1,5 +1,7 @@
 # Event Hub
-
+URL https://event-hub-jrvd.onrender.com
+login: Lev
+password: Lev
 Event Hub is a Django-based web application designed to manage events and participants. It supports organizing events, user management, feedback, and ratings for events. The project is currently in the **Alpha 1.0** stage of development.
 
 ## Table of Contents
