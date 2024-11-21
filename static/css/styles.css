@@ -1,0 +1,22 @@
+.event-layout {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.comments-section, .participants-section {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+.comments-section {
+    margin-right: 10px;
+}
+
+.participants-section {
+    margin-left: 10px;
+}

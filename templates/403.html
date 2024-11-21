@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Access Denied</title>{% endblock %}
+
+{% block content %}
+  <h1>Access Denied</h1>
+  <p>You do not have permission to access this page.</p>
+  <a href="{% url 'event_manager:event-list' %}">Go back to the homepage</a>
+{% endblock %}
